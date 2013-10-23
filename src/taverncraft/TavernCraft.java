@@ -1,8 +1,13 @@
 package taverncraft;
 
 import net.minecraft.block.Block;
+import net.minecraft.crash.CallableMinecraftVersion;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
+import net.minecraft.world.gen.structure.MapGenStructureIO;
+import taverncraft.Registrations.GeneralItemRegistrations;
+import taverncraft.WorldGeneration.VillageRelated.ComponentTavern;
+import taverncraft.WorldGeneration.VillageRelated.VillageTavernHandler;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -15,6 +20,7 @@ import cpw.mods.fml.common.event.FMLServerStartedEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.registry.LanguageRegistry;
+import cpw.mods.fml.common.registry.VillagerRegistry;
 
 @Mod(modid = "TavernCraft", name = "taverncraft", version = "1.6.4")
 @NetworkMod(clientSideRequired = true, serverSideRequired = false)
@@ -32,10 +38,10 @@ public class TavernCraft
     @SidedProxy(clientSide = "taverncraft.ProxyClient", serverSide = "taverncraft.Proxy")
     public static Proxy proxy;
 
-    //public static void checkVersion (Side side)
-    //{
-    //    VersionCheck.startCheck(side);
-    //}
+    // public static void checkVersion (Side side)
+    // {
+    // VersionCheck.startCheck(side);
+    // }
 
     @EventHandler
     public void preInit (FMLPreInitializationEvent event)
@@ -49,14 +55,41 @@ public class TavernCraft
     {
         proxy.registerRenderInformation();
         proxy.addNames();
+
+        GeneralItemRegistrations.generalItemRegistrations();
         /* Creative tab related */
-        LanguageRegistry.instance().addStringLocalization("itemGroup.taverncraft", "en_US", "taverncraft");
+        LanguageRegistry.instance().addStringLocalization("itemGroup.taverncraft", "en_US", "TavernCraft");
+
+        //RelatedAVillageTrades trades = new AVillageTrades();
+        if (Config.enabletavernvillagers)
+        {
+            // adds to the villager spawner egg
+            VillagerRegistry.instance().registerVillagerId(54365);
+            // moved down, not needed if 'addToVillages' is false
+            //VillagerRegistry.instance().registerVillageTradeHandler(54365, new TVillageTrades());
+            VillagerRegistry.instance().registerVillageCreationHandler(new VillageTavernHandler());
+            try
+            {
+                if (new CallableMinecraftVersion(null).minecraftVersion().equals("1.6.4"))
+                {
+                    MapGenStructureIO.func_143031_a(ComponentTavern.class, "TavernCraft:TavernStructure");
+                }
+            }
+            catch (Throwable e)
+            {
+
+            }
+        } 
+
     }
+
     public static CreativeTabs taverncrafttab = new CreativeTabs("taverncraft")
     {
         public ItemStack getIconItemStack ()
         {
-            //return new ItemStack(vanityblocks.Registrations.VanityBlocksRegistration.VanityDesignblock, 1, 0);
+            // return new
+            // ItemStack(vanityblocks.Registrations.VanityBlocksRegistration.VanityDesignblock,
+            // 1, 0);
             return new ItemStack(Block.stoneBrick);
         }
     };
@@ -66,12 +99,14 @@ public class TavernCraft
     {
         FMLLog.info("[Taverncraft] Seems to have loaded well!");
     }
+
     @EventHandler
     public void serverInit (FMLServerStartedEvent event)
     {
     }
+
     @EventHandler
-    public static void serverStarting(FMLServerStartingEvent event)
-    {    
+    public static void serverStarting (FMLServerStartingEvent event)
+    {
     }
 }

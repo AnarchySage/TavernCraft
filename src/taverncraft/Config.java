@@ -7,7 +7,6 @@ import cpw.mods.fml.common.FMLLog;
 
 import net.minecraftforge.common.Configuration;
 
-
 public class Config
 {
 
@@ -18,7 +17,7 @@ public class Config
          * Second: Create the actual config file
          * Note: Configs are a pain, but absolutely necessary for every mod.
          */
-        File newFile = new File(location + "/Mixology.cfg");
+        File newFile = new File(location + "/TavernCraft.cfg");
 
         /* Some basic debugging will go a long way */
         try
@@ -27,7 +26,7 @@ public class Config
         }
         catch (IOException e)
         {
-            FMLLog.info("[Mixology] Could not create configuration file. Reason:");
+            FMLLog.info("[TavernCraft] Could not create configuration file. Reason:");
             FMLLog.info(e.getLocalizedMessage());
         }
 
@@ -40,22 +39,27 @@ public class Config
         /* Define the mod's IDs. 
          * Avoid values below 4096 for items and in the 250-450 range for blocks
          */
-
+        String enabled = "What to enable/disable";
+        enablemod = config.get(enabled, "Enable the mod?", true).getBoolean(true);
+        enabletavernvillagers = config.get(enabled, "Enable the villager registration and generation?", true).getBoolean(true);
+        
+        
         
         //Property conTexMode = config.get("Looks", "Connected Textures Enabled", true);
         //conTexMode.comment = "0 = disabled, 1 = enabled, 2 = enabled + ignore stained glass meta";
         //connectedTexturesMode = conTexMode.getInt(2);
-        
-    
+
         /* Save the configuration file */
         config.save();
     }
+
     public static File cfglocation;
+    public static boolean enablemod;
+    public static boolean enabletavernvillagers;
 
     //these are left as an example, ints for id's, booleans for if we want it to happen or not
     //public static int ids;
     //public static boolean ifs;
     //Looks
     //public static int connectedTexturesMode;
-    //public static File cfglocation;
 }

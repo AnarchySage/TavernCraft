@@ -11,8 +11,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
 import net.minecraft.world.World;
 
-public class TavernSpawn extends Item {
-	public Icon[] icons;
+public class TavernSpawn extends Item
+{
+    public Icon[] icons;
     public String[] textureNames = new String[] { "TavernSpawnItem" };
 
     public TavernSpawn(int par1)
