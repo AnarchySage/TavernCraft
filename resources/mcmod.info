@@ -1,0 +1,19 @@
+[
+{
+  "modid": "TavernCraft",
+  "name": "AnarchySage And Kodos_Atoz TaverCraft",
+  "description": "Adds some tavern related stuff(Still wip)",
+  "version": "1.6.4",
+  "credits": "AnarchySage And Kodos_Atoz",
+  "logoFile": "",
+  "mcversion": "1.6.x",
+  "url": "http://ci.iongaming.org/job/TavernCraft/",
+  "updateUrl": "",
+  "authors": [ "AnarchySage And Kodos_Atoz" ],
+  "parent":"",
+  "screenshots": [],
+  "dependencies": [
+     "MinecraftForge"
+  ]
+}
+]
