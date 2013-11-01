@@ -1,13 +1,13 @@
 package taverncraft;
 
 import net.minecraft.block.Block;
-import net.minecraft.crash.CallableMinecraftVersion;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
-import net.minecraft.world.gen.structure.MapGenStructureIO;
+import taverncraft.Registrations.BlockRegistrations;
 import taverncraft.Registrations.GeneralItemRegistrations;
-import taverncraft.WorldGeneration.VillageRelated.ComponentTavern;
-import taverncraft.WorldGeneration.VillageRelated.VillageTavernHandler;
+import taverncraft.Renders.BlockTrellisRender;
+import taverncraft.WorldGeneration.Tavern.TavernHandler;
+import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -19,6 +19,7 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartedEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.network.NetworkMod;
+import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import cpw.mods.fml.common.registry.VillagerRegistry;
 
@@ -56,30 +57,35 @@ public class TavernCraft
         proxy.registerRenderInformation();
         proxy.addNames();
 
+        BlockRegistrations.blockRegistrations();
+        BlockRegistrations.addRecipes();
         GeneralItemRegistrations.generalItemRegistrations();
+        RenderingRegistry.registerBlockHandler(new BlockTrellisRender());
+        
         /* Creative tab related */
         LanguageRegistry.instance().addStringLocalization("itemGroup.taverncraft", "en_US", "TavernCraft");
+        
+        
+        if (Config.enablevillagetavern)
+        {        
+            //RelatedAVillageTrades trades = new AVillageTrades();
 
-        //RelatedAVillageTrades trades = new AVillageTrades();
-        if (Config.enabletavernvillagers)
-        {
             // adds to the villager spawner egg
             VillagerRegistry.instance().registerVillagerId(54365);
-            // moved down, not needed if 'addToVillages' is false
-            //VillagerRegistry.instance().registerVillageTradeHandler(54365, new TVillageTrades());
-            VillagerRegistry.instance().registerVillageCreationHandler(new VillageTavernHandler());
-            try
-            {
-                if (new CallableMinecraftVersion(null).minecraftVersion().equals("1.6.4"))
-                {
-                    MapGenStructureIO.func_143031_a(ComponentTavern.class, "TavernCraft:TavernStructure");
-                }
-            }
-            catch (Throwable e)
-            {
-
-            }
-        } 
+            //VillagerRegistry.instance().registerVillageTradeHandler(54365, new BartenderVillageTrades());
+            GameRegistry.registerWorldGenerator(new TavernHandler());
+            //try
+            //{
+            //    if (new CallableMinecraftVersion(null).minecraftVersion().equals("1.6.4"))
+            //    {
+            //        MapGenStructureIO.func_143031_a(StructureTavern.class, "TavernCraft:TavernStructure");
+            //    }
+            //}
+            //catch (Throwable e)
+            //{
+//
+ //           }
+      } 
 
     }
 

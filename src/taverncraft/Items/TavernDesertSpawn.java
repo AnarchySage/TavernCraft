@@ -7,16 +7,16 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
 import net.minecraft.world.World;
 import taverncraft.TavernCraft;
-import taverncraft.WorldGeneration.Tavern.StructureTavern;
+import taverncraft.WorldGeneration.Tavern.StructureDesertTavern;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class TavernSpawn extends Item
+public class TavernDesertSpawn extends Item
 {
     public Icon[] icons;
     public String[] textureNames = new String[] { "TavernSpawnItem" };
 
-    public TavernSpawn(int par1)
+    public TavernDesertSpawn(int par1)
     {
         super(par1);
         this.setHasSubtypes(true);
@@ -26,7 +26,7 @@ public class TavernSpawn extends Item
     public boolean onItemUse (ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, World par3World, int i, int j, int k, int par7, float par8, float par9, float par10)
     {
         //return new StructureTavern().generate(par3World, null, i, j, k);
-        return new StructureTavern().generate(par3World, null, i, j, k);
+        return new StructureDesertTavern().generate(par3World, null, i, j, k);
     }
 
     @SideOnly(Side.CLIENT)

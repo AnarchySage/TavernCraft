@@ -1,9 +1,8 @@
 package taverncraft.Registrations;
 
-import taverncraft.Items.TavernSpawn;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import cpw.mods.fml.common.registry.GameRegistry;
+import taverncraft.Items.TavernDesertSpawn;
+import taverncraft.Items.TavernSpawn;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
 public class GeneralItemRegistrations
@@ -21,8 +20,12 @@ public class GeneralItemRegistrations
         // RedstoneLampDimItemBlock.class, "Redstone Lamp Dim");
         // LanguageRegistry.addName(new ItemStack(RedstoneLampDim, 1, 0),
         // "Dim Black Redstone Lamp");
-        tavernspawn = new TavernSpawn(19500).setUnlocalizedName("tavernspawn");
+        /*
+         * tavernspawn = new TavernSpawn(19500).setUnlocalizedName("tavernspawn");
         LanguageRegistry.addName(tavernspawn, "Tavern spawn Test Item");
+        taverndesertspawn = new TavernDesertSpawn(19501).setUnlocalizedName("taverndesertspawn");
+        LanguageRegistry.addName(taverndesertspawn, "Desert Tavern spawn Test Item");
+         */
     }
 
     public static void addRecipes ()
@@ -30,4 +33,5 @@ public class GeneralItemRegistrations
     }
 
     public static Item tavernspawn;
+    public static Item taverndesertspawn;
 }
